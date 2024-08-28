@@ -17,8 +17,18 @@ window.addEventListener("beforeinstallprompt", (event) => {
   });
 });
 
-// TODO: Implement a click event handler on the `butInstall` element
-butInstall.addEventListener("click", async () => {});
+const isPWA = () =>
+  !!(
+    window.matchMedia?.("(display-mode: standalone)").matches ||
+    window.navigator.standalone
+  );
 
-// TODO: Add an handler for the `appinstalled` event
-window.addEventListener("appinstalled", (event) => {});
+// Hide the install button if the app is already installed or running in standalone mode
+if (isPWA()) {
+  butInstall.classList.add("hidden");
+}
+
+// Event handler for the `appinstalled` event
+window.addEventListener("appinstalled", () => {
+  console.log("PWA was installed");
+});
